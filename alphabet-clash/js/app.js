@@ -1,0 +1,58 @@
+
+const audio = new Audio();
+let isGamePlayOn = false;
+const artBoard = document.getElementById('art-board');
+function handleKeyboardKeyUpEvent(event){
+   if (isGamePlayOn == false) return;
+   
+   
+    const playerPressed = event.key;
+
+    //stop the game if player press ESc button
+    if (playerPressed === 'Escape'){
+        gameOver();
+    }
+
+
+    //get the expected to press 
+
+    const currentAlphabetElement = document.getElementById('current-alphabet');
+    const currentAlphabet = currentAlphabetElement.innerText;
+    const expectedAlphabet = currentAlphabet.toLowerCase();
+
+    // check matched or not 
+
+    if(playerPressed === expectedAlphabet){
+
+        audio.src = "../audio/right.mp3";
+        audio.play();
+
+        const currrentScore =getTextElementValueById('current-score');
+        const updatedScore = currrentScore + 1;
+        setTextElementValueById('current-score', updatedScore);
+        //get the current score option : 2
+        
+        // start a new round
+        removeBackgroundColorById(expectedAlphabet);
+        continueGame();
+    } else {
+
+        audio.src = "../audio/wrong.mp3";
+        audio.play();
+        
+        const currentLife = getTextElementValueById('current-life');
+        const updatedLife = currentLife -1; 
+
+        const updatedLifeParcentage = (updatedLife / 5) * 100;
+        artBoard.style.background = `linear-gradient(#FFFFFFB3 ${updatedLifeParcentage}%,red)`;
+
+
+        setTextElementValueById('current-life', updatedLife);
+
+        if(updatedLife === 0){
+            gameOver();     
+        }
+    }
+
+}
+
