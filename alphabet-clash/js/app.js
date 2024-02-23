@@ -88,3 +88,19 @@ function play(){
     isGamePlayOn = true;
 }
 
+function gameOver(){
+    hideElementById('play-ground');
+    showElementById('final-score');
+
+    //update final score
+    //get the final score 
+    const lastScore =getTextElementValueById('current-score');
+    setTextElementValueById('last-score', lastScore);
+
+    //clear the last selected key 
+    const currentAlphabet = getElementTextById('current-alphabet');
+    removeBackgroundColorById(currentAlphabet);
+
+    isGamePlayOn = false;
+    artBoard.style.background = "linear-gradient(#FFFFFFB3 100%,red)";
+}
